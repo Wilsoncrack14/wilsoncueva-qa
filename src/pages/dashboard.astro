@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/layout/Container.astro';
+import QADashboard from '../components/dashboard/QADashboard';
+---
+
+<BaseLayout
+  title="QA Dashboard — Resultados de pruebas | Wilson Cueva"
+  description="Métricas y resultados de las ejecuciones automatizadas con Playwright."
+>
+  <section class="bg-bg-primary py-10 sm:py-14">
+    <Container>
+      <QADashboard client:load />
+    </Container>
+  </section>
+</BaseLayout>

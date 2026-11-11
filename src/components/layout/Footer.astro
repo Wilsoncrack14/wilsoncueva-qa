@@ -1,0 +1,93 @@
+---
+import Container from './Container.astro';
+import { profileData } from '../../data/profile';
+---
+
+<footer class="border-t border-border-subtle bg-bg-secondary text-text-secondary">
+  <Container class="py-12">
+    <div class="grid gap-8 md:grid-cols-12">
+      <!-- Brand Summary -->
+      <div class="space-y-3 md:col-span-5">
+        <div class="flex items-center gap-3">
+          <span class="flex h-8 w-8 items-center justify-center rounded-md border border-accent-lime/40 bg-surface font-mono text-xs font-bold text-accent-lime">
+            {profileData.initials}
+          </span>
+          <span class="font-semibold text-text-primary">{profileData.name}</span>
+        </div>
+        <p class="text-sm leading-relaxed text-text-secondary max-w-sm">
+          {profileData.role} · {profileData.location}. Especializado en automatización E2E con Playwright, validación contractual de APIs y rendimiento.
+        </p>
+        <div class="flex items-center gap-2 pt-1 font-mono text-xs text-accent-lime">
+          <span class="h-2 w-2 rounded-full bg-accent-lime animate-pulse" aria-hidden="true"></span>
+          <span>Disponible para oportunidades en QA Automation / Software QA</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="space-y-3 md:col-span-4">
+        <p class="font-mono text-xs font-semibold uppercase tracking-wider text-text-primary">
+          Secciones del Portafolio
+        </p>
+        <ul class="grid grid-cols-2 gap-2 text-sm">
+          <li><a href="/" class="hover:text-accent-lime transition-colors">Inicio</a></li>
+          <li><a href="/about" class="hover:text-accent-lime transition-colors">Sobre mí</a></li>
+          <li><a href="/#skills" class="hover:text-accent-lime transition-colors">Skills</a></li>
+          <li><a href="/projects" class="hover:text-accent-lime transition-colors">Proyectos</a></li>
+          <li><a href="/projects/hotel-asturias/report" class="hover:text-accent-lime transition-colors">Reporte & Dashboard QA</a></li>
+          <li><a href="/evidence" class="hover:text-accent-lime transition-colors">Evidencias</a></li>
+          <li><a href="/contact" class="hover:text-accent-lime transition-colors">Contacto</a></li>
+          <li>
+            <a href={profileData.cvUrl} download="Wilson_Cueva_CV_QA_Automation.pdf" class="text-accent-lime hover:underline">
+              Descargar CV
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Verification & External Links -->
+      <div class="space-y-3 md:col-span-3">
+        <p class="font-mono text-xs font-semibold uppercase tracking-wider text-text-primary">
+          Verificación Técnica
+        </p>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a
+              href={profileData.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="hover:text-accent-lime transition-colors"
+            >
+              GitHub (@Wilsoncrack14) ↗
+            </a>
+          </li>
+          <li>
+            <a
+              href={profileData.linkedinUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="hover:text-accent-lime transition-colors"
+            >
+              LinkedIn ↗
+            </a>
+          </li>
+          <li>
+            <a
+              href="/deliverables/portfolio_case_study_hotel_asturias.json"
+              target="_blank"
+              class="font-mono text-xs text-accent-lime hover:underline"
+            >
+              Auditoría JSON (Hotel Asturias) ↗
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border-subtle pt-6 text-xs text-text-secondary sm:flex-row">
+      <p>© {new Date().getFullYear()} {profileData.name}. Lima, Perú · Todos los derechos reservados.</p>
+      <p class="font-mono">
+        Dark Tech QA Architecture · TypeScript Strict · Playwright Verified
+      </p>
+    </div>
+  </Container>
+</footer>

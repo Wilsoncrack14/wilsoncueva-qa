@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/layout/Container.astro';
+import Hero from '../components/sections/Hero.astro';
+import TechGrid from '../components/sections/TechGrid';
+import FeaturedProjects from '../components/sections/FeaturedProjects.astro';
+import { profileData } from '../data/profile';
+---
+
+<BaseLayout
+  title="Wilson Cueva | QA Automation Engineer / Software QA — Portafolio"
+  description={profileData.heroDescription}
+>
+  <!-- 1. HERO SECTION + PLAYWRIGHT TERMINAL -->
+  <Hero />
+
+  <!-- 2. TECNOLOGÍAS QUE UTILIZO (Infinite Marquee with Real Brand Logos) -->
+  <section id="skills" class="border-b border-white/[0.05] bg-bg-primary py-8 sm:py-10">
+    <Container>
+      <div class="flex items-center justify-between gap-4 mb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="h-4 w-0.5 rounded-full bg-accent-lime/80" aria-hidden="true"></span>
+          <h2 class="text-base font-semibold tracking-tight text-text-primary sm:text-lg">
+            Tecnologías que utilizo
+          </h2>
+        </div>
+        <a
+          href="/evidence"
+          class="inline-flex items-center gap-1.5 text-xs font-medium text-text-secondary hover:text-text-primary transition-colors"
+        >
+          <span>Ver stack completo</span>
+          <span class="text-accent-lime" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <TechGrid client:load />
+    </Container>
+  </section>
+
+  <!-- 3. PROYECTOS DESTACADOS -->
+  <FeaturedProjects />
+</BaseLayout>

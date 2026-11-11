@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Captura técnica de auditoría QA para Hotel Asturias">
+  <rect width="800" height="450" fill="#080B0A"/>
+  <rect x="20" y="20" width="760" height="410" rx="14" fill="#101513" stroke="#29332D" stroke-width="2"/>
+  <rect x="20" y="20" width="760" height="44" rx="14" fill="#151B18" stroke="#29332D" stroke-width="2"/>
+  <circle cx="48" cy="42" r="6" fill="#EF4444"/>
+  <circle cx="68" cy="42" r="6" fill="#F59E0B"/>
+  <circle cx="88" cy="42" r="6" fill="#22C55E"/>
+  <text x="115" y="47" fill="#A0AAA4" font-family="monospace" font-size="13">hotelasturias.pe — Next.js + WordPress Headless + WebGL 360°</text>
+  <rect x="590" y="30" width="170" height="24" rx="6" fill="#151B18" stroke="#B7FF35" stroke-width="1"/>
+  <text x="605" y="46" fill="#B7FF35" font-family="monospace" font-size="11" font-weight="bold">COMMIT 52af450 · PASS</text>
+
+  <!-- KPI Row -->
+  <rect x="48" y="88" width="220" height="92" rx="10" fill="#151B18" stroke="#29332D"/>
+  <text x="66" y="116" fill="#A0AAA4" font-family="monospace" font-size="11">MATRIZ BASADA EN RIESGO</text>
+  <text x="66" y="154" fill="#B7FF35" font-family="monospace" font-size="30" font-weight="bold">78 Casos</text>
+  <text x="66" y="170" fill="#F5F7F5" font-family="sans-serif" font-size="11">16 Riesgos · 15 Módulos</text>
+
+  <rect x="290" y="88" width="220" height="92" rx="10" fill="#151B18" stroke="#29332D"/>
+  <text x="308" y="116" fill="#A0AAA4" font-family="monospace" font-size="11">UNIT &amp; API CONTRACTS</text>
+  <text x="308" y="154" fill="#22C55E" font-family="monospace" font-size="30" font-weight="bold">221 Tests</text>
+  <text x="308" y="170" fill="#F5F7F5" font-family="sans-serif" font-size="11">Vitest · 26 Suites (5.84s)</text>
+
+  <rect x="532" y="88" width="220" height="92" rx="10" fill="#151B18" stroke="#29332D"/>
+  <text x="550" y="116" fill="#A0AAA4" font-family="monospace" font-size="11">PLAYWRIGHT E2E SUITE</text>
+  <text x="550" y="154" fill="#B7FF35" font-family="monospace" font-size="30" font-weight="bold">22 E2E</text>
+  <text x="550" y="170" fill="#F5F7F5" font-family="sans-serif" font-size="11">6 Viewports (320px–1920px)</text>
+
+  <!-- Terminal / Execution Log Preview -->
+  <rect x="48" y="202" width="704" height="202" rx="10" fill="#080B0A" stroke="#29332D"/>
+  <text x="70" y="234" fill="#B7FF35" font-family="monospace" font-size="13">$ npx playwright test --workers=1 &amp;&amp; pnpm vitest run</text>
+  <text x="70" y="264" fill="#22C55E" font-family="monospace" font-size="12">✓ e2e/smoke-routes.spec.ts .............. 5 routes verified (0 console errors)</text>
+  <text x="70" y="290" fill="#22C55E" font-family="monospace" font-size="12">✓ e2e/tour360-viewer.spec.ts ............ WebGL &lt;canvas&gt; + 502 fallback OK</text>
+  <text x="70" y="316" fill="#22C55E" font-family="monospace" font-size="12">✓ __tests__/api/reviews.test.ts ......... Honeypot, Rate Limit 429 &amp; Anti-XSS</text>
+  <text x="70" y="342" fill="#F59E0B" font-family="monospace" font-size="12">! DEF-001 Soft-404 streaming &amp; DEF-002 320px overflow documented</text>
+  <text x="70" y="376" fill="#F5F7F5" font-family="monospace" font-size="13" font-weight="bold">Audit Status: 68 Approved · 10 Hybrid/Partial · 0 Blocked</text>
+</svg>

@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/layout/Container.astro';
+import ContactForm from '../components/contact/ContactForm';
+import { profileData } from '../data/profile';
+---
+
+<BaseLayout
+  title="Contacto | Wilson Cueva — QA Automation Engineer / Software QA"
+  description="Contacta a Wilson Cueva para oportunidades laborales en QA Automation, Software QA, pruebas E2E con Playwright y testing de APIs en Lima, Perú."
+>
+  <section class="border-b border-border-subtle bg-bg-primary bg-tech-grid py-12 sm:py-16">
+    <Container>
+      <div class="max-w-3xl space-y-3">
+        <span class="inline-flex items-center gap-2 rounded-full border border-accent-lime/40 bg-accent-lime/10 px-3.5 py-1 font-mono text-xs font-semibold text-accent-lime">
+          CONTACTO PROFESIONAL
+        </span>
+        <h1 class="text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl">
+          Conversemos sobre Calidad y Automatización
+        </h1>
+        <p class="text-base leading-relaxed text-text-secondary">
+          Disponible para procesos de selección como QA Automation Engineer / Software QA, revisiones técnicas y colaboraciones en Lima, Perú o en modalidad remota.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <section class="bg-bg-secondary py-12 sm:py-20">
+    <Container>
+      <div class="grid gap-10 lg:grid-cols-12">
+        <!-- Left Column: Direct Channels & CV Download -->
+        <div class="space-y-6 lg:col-span-5">
+          <div class="rounded-2xl border border-border-subtle bg-surface p-6 space-y-5">
+            <h2 class="text-xl font-bold text-text-primary">Canales Directos Verificados</h2>
+            <p class="text-xs leading-relaxed text-text-secondary">
+              Puedes escribirme directamente por correo electrónico, revisar mis repositorios en GitHub, conectar en LinkedIn o descargar mi CV en PDF.
+            </p>
+
+            <div class="space-y-3">
+              <a
+                href={`mailto:${profileData.email}`}
+                class="flex items-center justify-between rounded-xl border border-border-subtle bg-bg-secondary p-4 transition hover:border-accent-lime/50"
+              >
+                <div>
+                  <p class="font-mono text-[11px] uppercase text-accent-lime">Correo Electrónico</p>
+                  <p class="mt-0.5 text-sm font-semibold text-text-primary">{profileData.email}</p>
+                </div>
+                <span class="font-mono text-xs text-accent-lime">Escribir ↗</span>
+              </a>
+
+              <a
+                href={profileData.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                class="flex items-center justify-between rounded-xl border border-border-subtle bg-bg-secondary p-4 transition hover:border-accent-lime/50"
+              >
+                <div>
+                  <p class="font-mono text-[11px] uppercase text-accent-lime">GitHub</p>
+                  <p class="mt-0.5 text-sm font-semibold text-text-primary">
+                    github.com/Wilsoncrack14
+                  </p>
+                </div>
+                <span class="font-mono text-xs text-accent-lime">Ver perfil ↗</span>
+              </a>
+
+              <a
+                href={profileData.linkedinUrl}
+                target="_blank"
+                rel="noreferrer"
+                class="flex items-center justify-between rounded-xl border border-border-subtle bg-bg-secondary p-4 transition hover:border-accent-lime/50"
+              >
+                <div>
+                  <p class="font-mono text-[11px] uppercase text-accent-lime">LinkedIn</p>
+                  <p class="mt-0.5 text-sm font-semibold text-text-primary">
+                    Wilson Cueva — QA Automation
+                  </p>
+                </div>
+                <span class="font-mono text-xs text-accent-lime">Conectar ↗</span>
+              </a>
+            </div>
+
+            <div class="border-t border-border-subtle pt-4">
+              <a
+                href={profileData.cvUrl}
+                download="Wilson_Cueva_CV_QA_Automation.pdf"
+                class="flex w-full items-center justify-center gap-2 rounded-xl bg-accent-lime px-5 py-3 text-sm font-bold text-bg-primary transition hover:bg-accent-lime-dim"
+              >
+                Descargar CV (PDF) ↓
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Validated Contact Form -->
+        <div class="lg:col-span-7">
+          <ContactForm client:load />
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

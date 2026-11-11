@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Container from '../../../components/layout/Container.astro';
+import QADashboard from '../../../components/dashboard/QADashboard';
+import AsturiasReportView from '../../../components/projects/AsturiasReportView';
+import asturiasAudit from '../../../content/projects/hotel-asturias-headless-qa.json';
+---
+
+<BaseLayout
+  title="Reporte Visual de Auditoría QA — Hotel Asturias (31 Suites · 243 Tests) | Wilson Cueva"
+  description="Explorador interactivo de la suite QA Automation de Hotel Asturias (rama qa/playwright-ci): 78 casos de prueba, 31 suites automatizadas (221 Vitest + 22 Playwright E2E), código real y matriz de riesgos."
+>
+  <section class="border-b border-border-subtle bg-bg-primary bg-tech-grid py-12 sm:py-16">
+    <Container>
+      <div class="space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <a
+            href="/projects/hotel-asturias"
+            class="inline-flex items-center gap-2 font-mono text-xs font-semibold text-accent-lime hover:underline"
+          >
+            ← Volver al Caso de Estudio Hotel Asturias
+          </a>
+          <span class="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1 font-mono text-xs font-semibold text-emerald-300">
+            Rama {asturiasAudit.links.qaBranch} · Commit {asturiasAudit.links.headCommit}
+          </span>
+        </div>
+
+        <div class="space-y-3">
+          <p class="font-mono text-xs font-bold uppercase tracking-widest text-accent-lime">
+            REPORTE TÉCNICO INTERACTIVO // {asturiasAudit.metrics.totalAutomatedSuites} SUITES AUTOMATIZADAS
+          </p>
+          <h1 class="text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl">
+            Hotel Asturias — <span class="text-accent-lime">Reporte de Auditoría QA</span>
+          </h1>
+          <p class="max-w-4xl text-sm leading-relaxed text-text-secondary sm:text-base">
+            {asturiasAudit.executiveSummary}
+          </p>
+        </div>
+
+        <!-- Resumen de KPIs Verificados -->
+        <div class="grid grid-cols-2 gap-3.5 pt-2 sm:grid-cols-3 lg:grid-cols-6">
+          <div class="rounded-2xl border border-[#29332D] bg-[#101513] p-4">
+            <p class="font-mono text-[11px] uppercase text-text-secondary">Matriz de Casos</p>
+            <p class="mt-1.5 font-mono text-2xl font-extrabold text-text-primary sm:text-3xl">
+              {asturiasAudit.metrics.totalTestCases}
+            </p>
+            <p class="mt-1 text-[11px] text-emerald-400">68 OK · 10 Parciales</p>
+          </div>
+
+          <div class="rounded-2xl border border-[#29332D] bg-[#101513] p-4">
+            <p class="font-mono text-[11px] uppercase text-text-secondary">Suites Totales</p>
+            <p class="mt-1.5 font-mono text-2xl font-extrabold text-accent-lime sm:text-3xl">
+              {asturiasAudit.metrics.totalAutomatedSuites}
+            </p>
+            <p class="mt-1 text-[11px] text-text-secondary">26 Vitest + 5 E2E</p>
+          </div>
+
+          <div class="rounded-2xl border border-[#29332D] bg-[#101513] p-4">
+            <p class="font-mono text-[11px] uppercase text-text-secondary">Tests Automatizados</p>
+            <p class="mt-1.5 font-mono text-2xl font-extrabold text-accent-lime sm:text-3xl">
+              {asturiasAudit.metrics.totalAutomatedTests}
+            </p>
+            <p class="mt-1 text-[11px] text-emerald-400">100% Passing</p>
+          </div>
+
+          <div class="rounded-2xl border border-[#29332D] bg-[#101513] p-4">
+            <p class="font-mono text-[11px] uppercase text-text-secondary">Vitest (API/Lib)</p>
+            <p class="mt-1.5 font-mono text-2xl font-extrabold text-text-primary sm:text-3xl">
+              {asturiasAudit.metrics.vitestTotalTests}
+            </p>
+            <p class="mt-1 text-[11px] text-text-secondary">en {asturiasAudit.metrics.vitestDurationSeconds}s</p>
+          </div>
+
+          <div class="rounded-2xl border border-[#29332D] bg-[#101513] p-4">
+            <p class="font-mono text-[11px] uppercase text-text-secondary">Playwright E2E</p>
+            <p class="mt-1.5 font-mono text-2xl font-extrabold text-text-primary sm:text-3xl">
+              {asturiasAudit.metrics.playwrightTotalTests}
+            </p>
+            <p class="mt-1 text-[11px] text-text-secondary">6 viewports auditados</p>
+          </div>
+
+          <div class="rounded-2xl border border-[#29332D] bg-[#101513] p-4">
+            <p class="font-mono text-[11px] uppercase text-text-secondary">Riesgos RBT</p>
+            <p class="mt-1.5 font-mono text-2xl font-extrabold text-text-primary sm:text-3xl">
+              {asturiasAudit.metrics.businessRisksMapped}
+            </p>
+            <p class="mt-1 text-[11px] text-text-secondary">Trazados P0–P2</p>
+          </div>
+        </div>
+
+        <!-- Barra de acciones -->
+        <div class="flex flex-wrap items-center gap-3 border-t border-border-subtle pt-5">
+          <a
+            href={asturiasAudit.links.production}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-2 rounded-xl bg-accent-lime px-4 py-2.5 text-xs font-bold text-bg-primary hover:bg-accent-lime-dim transition"
+          >
+            Visitar www.hotelasturias.pe en Producción ↗
+          </a>
+          <a
+            href="/deliverables/portfolio_case_study_hotel_asturias.json"
+            target="_blank"
+            class="inline-flex items-center gap-2 rounded-xl border border-accent-lime/40 bg-accent-lime/10 px-4 py-2.5 font-mono text-xs font-semibold text-accent-lime hover:bg-accent-lime hover:text-bg-primary transition"
+          >
+            Descargar JSON Crudo (portfolio_case_study_hotel_asturias.json) ↗
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <Container class="py-12 sm:py-16 space-y-16">
+    <!-- DASHBOARD DE EJECUCIÓN REAL DEL PROYECTO -->
+    <section class="rounded-3xl border border-[#29332D] bg-[#0B0F0E] p-6 sm:p-8">
+      <QADashboard client:load defaultProject="hotel-asturias" embedded={true} />
+    </section>
+
+    <AsturiasReportView client:load />
+  </Container>
+</BaseLayout>

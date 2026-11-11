@@ -1,0 +1,70 @@
+---
+import '../styles/globals.css';
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer.astro';
+import { profileData } from '../data/profile';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title,
+  description = `${profileData.name} — ${profileData.role}. ${profileData.heroDescription}`,
+  canonicalPath = Astro.url.pathname,
+} = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://wilsoncueva-qa.vercel.app';
+const canonicalUrl = `${siteUrl}${canonicalPath}`;
+---
+
+<!doctype html>
+<html lang="es" class="bg-bg-primary text-text-primary scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={profileData.name} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={`${profileData.name} | QA Automation Portfolio`} />
+    <meta property="og:locale" content="es_PE" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen flex flex-col bg-bg-primary text-text-primary font-sans antialiased selection:bg-accent-lime/20 selection:text-accent-lime">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-accent-lime focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:font-bold focus:text-bg-primary"
+    >
+      Saltar al contenido principal
+    </a>
+
+    <Navbar client:load currentPath={Astro.url.pathname} />
+
+    <main id="main-content" class="relative flex-1 w-full max-w-full min-w-0 overflow-x-hidden">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

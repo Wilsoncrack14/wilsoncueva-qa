@@ -1,0 +1,392 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/layout/Container.astro';
+import TestCasesTable from '../../components/projects/TestCasesTable';
+import QADashboard from '../../components/dashboard/QADashboard';
+import { portfolioProjects } from '../../data/projects';
+import type { PortfolioProject } from '../../types/portfolio';
+
+export function getStaticPaths() {
+  const paths: { params: { slug: string }; props: { project: PortfolioProject } }[] = [];
+
+  for (const project of portfolioProjects) {
+    paths.push({
+      params: { slug: project.slug },
+      props: { project },
+    });
+    if (project.legacySlug && project.legacySlug !== project.slug) {
+      paths.push({
+        params: { slug: project.legacySlug },
+        props: { project },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { project } = Astro.props;
+const isVerified = project.previewVisual.accentStatus === 'verified';
+---
+
+<BaseLayout
+  title={`${project.name} | Caso de Estudio QA — Wilson Cueva`}
+  description={project.description}
+>
+  <!-- 1. HEADER & PROJECT OVERVIEW -->
+  <section class="border-b border-border-subtle bg-bg-primary bg-tech-grid py-12 sm:py-16">
+    <Container>
+      <div class="space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <a
+            href="/projects"
+            class="inline-flex items-center gap-2 font-mono text-xs font-semibold text-accent-lime hover:underline"
+          >
+            ← Volver a Proyectos
+          </a>
+          <span
+            class={`rounded-full px-3.5 py-1 font-mono text-xs font-semibold ${
+              isVerified
+                ? 'border border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+                : 'border border-amber-500/40 bg-amber-500/10 text-amber-300'
+            }`}
+          >
+            {project.dataSourceMode}
+          </span>
+        </div>
+
+        <div class="space-y-3">
+          <p class="font-mono text-xs font-bold uppercase tracking-widest text-accent-lime">
+            PROYECTO {project.order} // {project.category}
+          </p>
+          <h1 class="text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl">
+            {project.name}
+          </h1>
+          <p class="max-w-4xl text-base leading-relaxed text-text-secondary sm:text-lg">
+            {project.longDescription}
+          </p>
+        </div>
+
+        <!-- Stack Chips -->
+        <div class="flex flex-wrap gap-2 pt-1">
+          {project.techStack.map((tech) => (
+            <span class="rounded-lg border border-border-subtle bg-surface px-3 py-1.5 font-mono text-xs text-text-primary">
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <!-- Metadata & Links Bar -->
+        <div class="flex flex-wrap items-center gap-4 border-t border-border-subtle pt-5 font-mono text-xs text-text-secondary">
+          <span>Rol: <strong class="text-text-primary">{project.role}</strong></span>
+          <span>Fecha: <strong class="text-text-primary">{project.date}</strong></span>
+          {project.links.qaBranch && (
+            <span>Rama QA: <strong class="text-accent-lime">{project.links.qaBranch}</strong></span>
+          )}
+          {project.links.baseCommit && (
+            <span>Commit Base: <strong class="text-accent-lime">{project.links.baseCommit}</strong></span>
+          )}
+          {project.links.production && (
+            <a
+              href={project.links.production}
+              target="_blank"
+              rel="noreferrer"
+              class="text-accent-lime hover:underline"
+            >
+              Sitio en Producción ↗
+            </a>
+          )}
+          {project.links.repository && (
+            <a
+              href={project.links.repository}
+              target="_blank"
+              rel="noreferrer"
+              class="text-accent-lime hover:underline"
+            >
+              Repositorio GitHub ↗
+            </a>
+          )}
+          {project.slug === 'hotel-asturias' && (
+            <a
+              href="/projects/hotel-asturias/report"
+              class="rounded-lg bg-accent-lime px-3 py-1.5 font-sans text-xs font-bold text-bg-primary hover:bg-accent-lime-dim transition"
+            >
+              Explorar Reporte Visual QA (31 Suites · 243 Tests) →
+            </a>
+          )}
+          {project.links.jsonDeliverable && (
+            <a
+              href={project.links.jsonDeliverable}
+              target="_blank"
+              class="rounded border border-accent-lime/40 bg-accent-lime/10 px-2.5 py-1 text-accent-lime hover:bg-accent-lime hover:text-bg-primary transition"
+            >
+              Descargar JSON Crudo ↗
+            </a>
+          )}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <Container class="py-12 sm:py-16 space-y-16">
+    <!-- 2. ARQUITECTURA TÉCNICA Y OBJETIVOS DE TESTING -->
+    <section class="grid gap-8 lg:grid-cols-12">
+      <div class="space-y-4 lg:col-span-7">
+        <h2 class="text-2xl font-bold text-text-primary">
+          1. Descripción y Arquitectura Técnica Bajo Prueba
+        </h2>
+        <p class="text-sm leading-relaxed text-text-secondary sm:text-base">
+          {project.architecture.summary}
+        </p>
+        <div class="grid gap-4 sm:grid-cols-2 pt-2">
+          {project.architecture.layers.map((layer) => (
+            <div class="rounded-xl border border-border-subtle bg-surface p-5 space-y-2">
+              <h3 class="text-sm font-bold text-accent-lime">{layer.title}</h3>
+              <p class="text-xs leading-relaxed text-text-secondary">{layer.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="space-y-4 lg:col-span-5">
+        <h2 class="text-2xl font-bold text-text-primary">
+          2. Objetivos de Testing
+        </h2>
+        <div class="rounded-xl border border-border-subtle bg-surface p-6">
+          <ul class="space-y-3 text-sm text-text-secondary">
+            {project.testingObjectives.map((obj, idx) => (
+              <li class="flex items-start gap-3">
+                <span class="font-mono text-xs font-bold text-accent-lime mt-0.5">
+                  0{idx + 1}
+                </span>
+                <span class="leading-relaxed">{obj}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. MÓDULOS EVALUADOS -->
+    <section class="space-y-6">
+      <div class="space-y-2">
+        <h2 class="text-2xl font-bold text-text-primary">
+          3. Módulos Evaluados ({project.evaluatedModules.length} Módulos)
+        </h2>
+        <p class="text-sm text-text-secondary">
+          Cobertura funcional y técnica desglosada por módulo de la aplicación.
+        </p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {project.evaluatedModules.map((mod) => (
+          <div class="flex flex-col justify-between rounded-xl border border-border-subtle bg-surface p-4">
+            <div>
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="font-bold text-text-primary text-sm">{mod.name}</h3>
+                <span
+                  class={`rounded px-2 py-0.5 font-mono text-[10px] font-semibold ${
+                    mod.status === 'Aprobado'
+                      ? 'bg-emerald-500/15 text-emerald-300'
+                      : mod.status === 'Parcial'
+                      ? 'bg-amber-500/15 text-amber-300'
+                      : 'bg-bg-secondary text-amber-300 border border-border-subtle'
+                  }`}
+                >
+                  {mod.status}
+                </span>
+              </div>
+              <p class="mt-2 text-xs leading-relaxed text-text-secondary">
+                {mod.description}
+              </p>
+            </div>
+            <div class="mt-4 border-t border-border-subtle pt-2.5 flex items-center justify-between font-mono text-[11px] text-text-secondary">
+              <span>Casos: <strong class="text-text-primary">{mod.totalCases}</strong></span>
+              {mod.approvedCases > 0 ? (
+                <span class="text-emerald-400">{mod.approvedCases} OK · {mod.partialCases} Parcial</span>
+              ) : (
+                <span class="text-amber-300">{mod.pendingCases} Pendientes</span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 4. ESCENARIOS Y CASOS DE PRUEBA -->
+    <section class="space-y-6">
+      <div class="space-y-2">
+        <h2 class="text-2xl font-bold text-text-primary">
+          4. Escenarios y Matriz de Casos de Prueba
+        </h2>
+        <p class="text-sm text-text-secondary">
+          Estructura estandarizada (`ID`, `Escenario`, `Resultado esperado`, `Estado`). No se presentan estados ficticios como resultados reales.
+        </p>
+      </div>
+
+      <TestCasesTable client:visible testCases={project.testCases} projectName={project.shortTitle} />
+    </section>
+
+    <!-- 5. ESTRATEGIA TÉCNICA: E2E, API, REGRESIÓN Y PERFORMANCE -->
+    <section class="space-y-6">
+      <h2 class="text-2xl font-bold text-text-primary">
+        5. Automatizaciones E2E, API Testing, Regresión y Performance
+      </h2>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <!-- E2E Automation -->
+        <div class="rounded-xl border border-border-subtle bg-surface p-6 space-y-3">
+          <span class="font-mono text-xs font-bold uppercase text-accent-lime">
+            5.1 // Automatizaciones E2E
+          </span>
+          <h3 class="text-lg font-bold text-text-primary">{project.e2eAutomation.title}</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">{project.e2eAutomation.summary}</p>
+          <ul class="space-y-2 pt-2 text-xs text-text-secondary list-disc pl-4">
+            {project.e2eAutomation.highlights.map((item) => (
+              <li class="leading-relaxed">{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- API Testing -->
+        <div class="rounded-xl border border-border-subtle bg-surface p-6 space-y-3">
+          <span class="font-mono text-xs font-bold uppercase text-accent-lime">
+            5.2 // API Testing
+          </span>
+          <h3 class="text-lg font-bold text-text-primary">{project.apiTesting.title}</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">{project.apiTesting.summary}</p>
+          <ul class="space-y-2 pt-2 text-xs text-text-secondary list-disc pl-4">
+            {project.apiTesting.highlights.map((item) => (
+              <li class="leading-relaxed">{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Regression Testing -->
+        <div class="rounded-xl border border-border-subtle bg-surface p-6 space-y-3">
+          <span class="font-mono text-xs font-bold uppercase text-accent-lime">
+            5.3 // Regression Testing
+          </span>
+          <h3 class="text-lg font-bold text-text-primary">{project.regressionTesting.title}</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">{project.regressionTesting.summary}</p>
+          <ul class="space-y-2 pt-2 text-xs text-text-secondary list-disc pl-4">
+            {project.regressionTesting.highlights.map((item) => (
+              <li class="leading-relaxed">{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Performance Testing -->
+        <div class="rounded-xl border border-border-subtle bg-surface p-6 space-y-3">
+          <span class="font-mono text-xs font-bold uppercase text-accent-lime">
+            5.4 // Performance Testing
+          </span>
+          <h3 class="text-lg font-bold text-text-primary">{project.performanceTesting.title}</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">{project.performanceTesting.summary}</p>
+          <ul class="space-y-2 pt-2 text-xs text-text-secondary list-disc pl-4">
+            {project.performanceTesting.highlights.map((item) => (
+              <li class="leading-relaxed">{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. RESULTADOS, DASHBOARD DE EJECUCIÓN Y HALLAZGOS REALES -->
+    <section class="space-y-8">
+      <div class="rounded-3xl border border-[#29332D] bg-[#0B0F0E] p-6 sm:p-8">
+        <QADashboard client:visible defaultProject={project.slug} embedded={true} />
+      </div>
+
+      <div class="space-y-2 pt-2">
+        <h2 class="text-2xl font-bold text-text-primary">
+          6. Resumen de Matriz y Evidencias Verificables
+        </h2>
+        <p class="text-sm text-text-secondary">{project.resultsSummary.disclaimer}</p>
+      </div>
+
+      <!-- Summary KPIs -->
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div class="rounded-xl border border-border-subtle bg-surface p-5">
+          <p class="font-mono text-xs uppercase text-text-secondary">Total Casos Matriz</p>
+          <p class="mt-2 font-mono text-3xl font-bold text-text-primary">
+            {project.resultsSummary.totalCases}
+          </p>
+        </div>
+        <div class="rounded-xl border border-border-subtle bg-surface p-5">
+          <p class="font-mono text-xs uppercase text-text-secondary">Tests Automatizados</p>
+          <p class="mt-2 font-mono text-3xl font-bold text-accent-lime">
+            {project.resultsSummary.automatedTests}
+          </p>
+        </div>
+        <div class="rounded-xl border border-border-subtle bg-surface p-5">
+          <p class="font-mono text-xs uppercase text-text-secondary">Aprobados / Parciales</p>
+          <p class="mt-2 font-mono text-3xl font-bold text-emerald-400">
+            {project.resultsSummary.approved} / {project.resultsSummary.partial}
+          </p>
+        </div>
+        <div class="rounded-xl border border-border-subtle bg-surface p-5">
+          <p class="font-mono text-xs uppercase text-text-secondary">Pendientes de Ejecución</p>
+          <p class="mt-2 font-mono text-3xl font-bold text-amber-300">
+            {project.resultsSummary.pending}
+          </p>
+        </div>
+      </div>
+
+      <!-- Findings if present (Hotel Asturias) -->
+      {project.resultsSummary.findings.length > 0 && (
+        <div class="space-y-4 pt-2">
+          <h3 class="text-lg font-bold text-text-primary">
+            Hallazgos Técnicos Documentados en la Auditoría
+          </h3>
+          <div class="grid gap-4 md:grid-cols-2">
+            {project.resultsSummary.findings.map((finding) => (
+              <div class="rounded-xl border border-border-subtle bg-surface p-5 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2 font-mono text-xs">
+                    <span class="font-bold text-accent-lime">{finding.id}</span>
+                    <span class="rounded border border-border-subtle bg-bg-secondary px-2 py-0.5 text-text-secondary">
+                      {finding.type} · {finding.severity}
+                    </span>
+                  </div>
+                  <h4 class="mt-3 font-bold text-text-primary">{finding.title}</h4>
+                  <p class="mt-2 text-xs leading-relaxed text-text-secondary">{finding.detail}</p>
+                  {finding.solution && (
+                    <p class="mt-3 rounded-lg border border-accent-lime/30 bg-accent-lime/10 p-2.5 text-xs text-accent-lime">
+                      <strong>Remediación:</strong> {finding.solution}
+                    </p>
+                  )}
+                </div>
+                <div class="mt-4 border-t border-border-subtle pt-3 flex flex-wrap gap-1.5">
+                  {finding.caseIds.map((cid) => (
+                    <span class="rounded bg-bg-primary px-2 py-0.5 font-mono text-[11px] text-text-secondary">
+                      {cid}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Evidence Links -->
+      <div class="grid gap-4 sm:grid-cols-3 pt-2">
+        {project.evidences.map((ev) => (
+          <a
+            href={ev.reference}
+            target={ev.reference.startsWith('http') || ev.reference.endsWith('.json') ? '_blank' : undefined}
+            rel={ev.reference.startsWith('http') ? 'noreferrer' : undefined}
+            class="group rounded-xl border border-border-subtle bg-surface p-5 transition hover:border-accent-lime/60"
+          >
+            <span class="font-mono text-[11px] uppercase text-accent-lime">{ev.type}</span>
+            <h4 class="mt-1 font-bold text-text-primary group-hover:text-accent-lime transition-colors">
+              {ev.title} ↗
+            </h4>
+            <p class="mt-2 text-xs leading-relaxed text-text-secondary">{ev.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </Container>
+</BaseLayout>

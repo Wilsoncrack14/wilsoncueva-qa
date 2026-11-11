@@ -1,0 +1,561 @@
+{
+  "id": "hotel-asturias-headless-qa",
+  "slug": "hotel-asturias-headless-qa-automation",
+  "title": "Hotel Asturias — Plataforma Headless (Next.js + WordPress) & Suite QA Automation",
+  "subtitle": "Arquitectura Headless multi-sede con Tour Virtual 360° WebGL, Asistente IA y Estrategia de Calidad Basada en Riesgos (78 escenarios · 243 tests automatizados en 31 suites)",
+  "category": [
+    "Full-Stack Headless",
+    "QA Automation",
+    "Next.js",
+    "Testing E2E"
+  ],
+  "role": "Full-Stack Developer & Senior QA Automation Engineer",
+  "date": "2026-11",
+  "links": {
+    "production": "https://www.hotelasturias.pe",
+    "repository": "https://github.com/Wilsoncrack14/hotel-asturias-vercel",
+    "pullRequest": "https://github.com/Wilsoncrack14/hotel-asturias-vercel/pull/new/qa/playwright-ci",
+    "baseCommit": "52af450",
+    "headCommit": "46aeae7",
+    "qaBranch": "qa/playwright-ci"
+  },
+  "techStack": [
+    "Next.js 16 (App Router / ISR)",
+    "TypeScript 5.9 (Strict)",
+    "React 19",
+    "Tailwind CSS 4",
+    "WordPress Headless (REST API + ACF)",
+    "Photo Sphere Viewer 5 (WebGL 360°)",
+    "Vitest 4 (26 Suites / 221 Tests)",
+    "Playwright 1.61 E2E (5 Suites / 22 Tests)",
+    "Vercel Edge / CDN"
+  ],
+  "executiveSummary": "Desarrollo y aseguramiento de calidad integral para la plataforma digital de Hotel Asturias (5 sedes en Lima, Perú: Santa Anita, Lince, San Isidro, Ate y Los Olivos). A partir de un proceso formal de QA Discovery (963 líneas) y Test Plan (969 líneas), se diseñó y ejecutó una matriz de 78 casos de prueba (1,043 líneas) trazables a 16 riesgos de negocio, implementando una pirámide híbrida con 221 pruebas unitarias, de contratos API y seguridad en Vitest (26 suites en 5.84s), 22 pruebas E2E multi-viewport en Playwright (5 suites) y validación manual exploratoria en CMS y dispositivos.",
+  "metrics": {
+    "totalTestCases": 78,
+    "businessRisksMapped": 16,
+    "totalAutomatedSuites": 31,
+    "totalAutomatedTests": 243,
+    "vitestSuites": 26,
+    "vitestTotalTests": 221,
+    "vitestDurationSeconds": 5.84,
+    "playwrightSuites": 5,
+    "playwrightTotalTests": 22,
+    "playwrightDurationSeconds": 241.2,
+    "viewportsTested": [
+      "320x568",
+      "375x667",
+      "430x932",
+      "768x1024",
+      "1280x720",
+      "1920x1080"
+    ],
+    "coverageBreakdown": {
+      "automated": {
+        "count": 69,
+        "percentage": 88.46,
+        "label": "Cubierto (100% Automatizado en Vitest / Playwright)"
+      },
+      "hybridPartial": {
+        "count": 8,
+        "percentage": 10.26,
+        "label": "Parcial (Automatización DOM/API + Validación Manual / Dispositivo / Lector)"
+      },
+      "manual": {
+        "count": 1,
+        "percentage": 1.28,
+        "label": "Manual (Campaña de Rendimiento Lighthouse en Preview)"
+      }
+    },
+    "executionResults": {
+      "approved": 68,
+      "partial": 10,
+      "blocked": 0,
+      "notExecuted": 0
+    }
+  },
+  "qaDocumentation": [
+    {
+      "document": "QA-DISCOVERY.md",
+      "lines": 963,
+      "summary": "Análisis de arquitectura lógica Next.js + WordPress REST API, actores, 5 flujos críticos (F01–F05), matriz de 16 riesgos de negocio y estrategia de pruebas."
+    },
+    {
+      "document": "TEST-PLAN.md",
+      "lines": 969,
+      "summary": "Plan maestro basado en riesgos (Risk-Based Testing), pirámide de pruebas, criterios de entrada/salida, matriz de 6 viewports y lineamientos OWASP WSTG, WCAG 2.2 y Core Web Vitals."
+    },
+    {
+      "document": "TEST-CASES.md",
+      "lines": 1043,
+      "summary": "Catálogo ejecutable de 78 casos de prueba (P0 a P2) distribuidos en 15 módulos funcionales y no funcionales con trazabilidad directa a riesgos y suites automatizadas."
+    },
+    {
+      "document": "TEST-DATA.md",
+      "lines": 427,
+      "summary": "Diseño de datos de prueba, particiones de equivalencia positivas/negativas, valores límite, payloads anti-XSS/honeypot y fixtures aisladas."
+    }
+  ],
+  "architectureHighlights": [
+    {
+      "title": "Revalidación Quirúrgica ISR & Zero Cache Poisoning",
+      "description": "Webhook protegido (/api/revalidate) que invalida selectivamente tags y rutas (incluyendo redirección/limpieza de oldSlug al renombrar habitaciones o sedes en WordPress) y evita cachear respuestas vacías o fallos transitorios 5xx del CMS."
+    },
+    {
+      "title": "Proxy Multimedia 360° con ETag y Caché Condicional en Edge",
+      "description": "Endpoint /api/tour/[mediaId] con validación estricta de origen, soporte CORS, cabeceras Vercel-CDN-Cache-Control (s-maxage=86400, stale-while-revalidate=604800) y respuestas 304 Not Modified sin transferencia de cuerpo."
+    },
+    {
+      "title": "Resiliencia frente a Degradación del CMS",
+      "description": "Cliente WordPress con timeout acotado, reintentos con backoff ante errores 502/503/429, Circuit Breaker y ConcurrencyLimiter en memoria para proteger el servidor de origen."
+    },
+    {
+      "title": "Seguridad en Endpoints Públicos y Privados",
+      "description": "Protección anti-spam en /api/reviews mediante honeypot silencioso, trampa temporal (<1.8s), rate limiting por IP (429 Too Many Requests), sanitización HTML anti-XSS y escaneo estático de no exposición de secretos en bundles de cliente."
+    }
+  ],
+  "testingPyramid": [
+    {
+      "layer": "Unit, Domain & API Contract Tests (Vitest)",
+      "files": 26,
+      "tests": 221,
+      "duration": "5.84s",
+      "scope": [
+        "Normalización y filtrado de Sedes (11 tests), Habitaciones (9 tests), Servicios (21 tests), Productos (6 tests) y Tarifas (2 tests)",
+        "Webhook de revalidación ISR (/api/revalidate, 24 tests) para 12 tipos de contenido y cambio de slug (oldSlug)",
+        "Seguridad y validaciones de /api/reviews (13 tests: honeypot, time-trap <1.8s, rate limit por IP 429, escape XSS, integración Brevo SMTP)",
+        "Proxy /api/tour/[mediaId] (7 tests: status 200, 204, 304, 400, 404, 502) y /api/tour360/save (6 tests: 401/400/200 + revalidateTag)",
+        "Resiliencia WordPress Core (18 tests) y arquitectura Zero Cache Poisoning con ConcurrencyLimiter (8 tests)",
+        "Construcción de escenas y hotspots 360° (30 tests en 3 suites) y motor conversacional del Asistente Asturias (12 tests en 2 suites)",
+        "Auditoría de metadatos SEO (14 tests), favicons (6 tests), sitelinks (4 tests), /robots.txt, /sitemap.xml y cero secretos en cliente (5 tests)"
+      ]
+    },
+    {
+      "layer": "End-to-End & Multi-Viewport Browser Tests (Playwright)",
+      "files": 5,
+      "tests": 22,
+      "duration": "241.2s (--workers=1)",
+      "scope": [
+        "__tests__/e2e/smoke-routes.spec.ts (7 tests): Smoke de rutas principales (/, /sedes, /habitaciones, /servicios, /pasion-y-placer, /nosotros), menú móvil 375x667, historial goBack/goForward, CTAs wa.me/tel: y contratos HTTP en vivo (/api/revalidate, /api/og, /api/tour/489)",
+        "__tests__/e2e/catalog-and-360.spec.ts (6 tests): Filtros por sede y estado vacío, integridad Sede <-> Habitación, cero descargas /api/tour/* en listado, inicialización WebGL (<canvas>) en /vista360, fallback ante HTTP 502 y validación SEO/404 en vivo",
+        "__tests__/e2e/chat-widget.spec.ts (3 tests): Apertura del FAB Asistente Asturias, quick replies, cierre con X y tecla Escape sin duplicar diálogos, bloqueo de envío vacío y respuesta controlada ante consulta fuera de dominio",
+        "__tests__/e2e/chat-detail-modal.spec.ts (3 tests): Flujo guiado de recomendación de habitación (Romántica -> 1-2 huéspedes), apertura de modal de detalle, validación de CTA WhatsApp y formulario 'Dejar una reseña'",
+        "__tests__/e2e/responsive-and-a11y.spec.ts (3 tests): Auditoría de scrollWidth horizontal en 6 viewports (320x568 a 1920x1080), diagnóstico de elementos desbordados, navegación por teclado Tab y verificación de atributo alt en el 100% de imágenes"
+      ]
+    },
+    {
+      "layer": "Manual & Exploratory Testing",
+      "cases": 9,
+      "scope": [
+        "Flujo editorial real en WordPress CMS: creación de habitación y edición de slug con actualización en vivo (TC-CMS-004 - Aprobado)",
+        "Invocación de marcador telefónico nativo en dispositivos móviles físicos (TC-CON-002)",
+        "Evaluación con lector de pantalla (NVDA/VoiceOver) y contraste visual WCAG 2.2 AA sobre fotografías Hero (TC-CHAT-005, TC-A11Y-001..005)",
+        "Línea base multi-corrida de Core Web Vitals (LCP, INP, CLS, TTFB) con Lighthouse sobre Vercel Preview (TC-PERF-001)"
+      ]
+    }
+  ],
+  "automatedSuitesInventory": [
+    {
+      "file": "__tests__/e2e/smoke-routes.spec.ts",
+      "runner": "Playwright E2E",
+      "category": "E2E Smoke & Contracts",
+      "tests": 7,
+      "casesCovered": ["TC-SMK-001..006", "TC-HOM-001..004", "TC-NAV-001..003", "TC-SED-004", "TC-CON-001..002"],
+      "description": "Valida carga de Home con 0 errores de consola, navegación principal y móvil (375x667), historial atrás/adelante, enlaces wa.me y tel:, ruta vista360 y respuestas HTTP de /api/revalidate, /api/og y /api/tour/489."
+    },
+    {
+      "file": "__tests__/e2e/catalog-and-360.spec.ts",
+      "runner": "Playwright E2E",
+      "category": "E2E Catálogo, WebGL 360° & SEO",
+      "tests": 6,
+      "casesCovered": ["TC-SED-001..003", "TC-HAB-001..006", "TC-360-001..005", "TC-PERF-002", "TC-SEO-001..004"],
+      "description": "Verifica filtros por URL (/habitaciones?sede=lince), estado sin resultados, 0 peticiones /api/tour/* fuera de vista360, lienzo WebGL <canvas>, intercepción de fallo 502 con fallback y metadatos SEO/404."
+    },
+    {
+      "file": "__tests__/e2e/chat-widget.spec.ts",
+      "runner": "Playwright E2E",
+      "category": "E2E Asistente Virtual & A11y",
+      "tests": 3,
+      "casesCovered": ["TC-SMK-007", "TC-CHAT-001..005", "TC-A11Y-003"],
+      "description": "Comprueba apertura del FAB, quick replies, cierre con botón y tecla Escape, reapertura con Enter sin duplicar diálogos, bloqueo de input vacío y fallback conversacional."
+    },
+    {
+      "file": "__tests__/e2e/chat-detail-modal.spec.ts",
+      "runner": "Playwright E2E",
+      "category": "E2E Recomendador & Reseñas",
+      "tests": 3,
+      "casesCovered": ["TC-CHAT-002", "TC-CHAT-003", "TC-HAB-004"],
+      "description": "Ejecuta el flujo completo de recomendación en el chat, verifica enlaces a sedes, abre el modal de detalle de habitación con CTA WhatsApp y prueba el flujo 'Dejar una reseña'."
+    },
+    {
+      "file": "__tests__/e2e/responsive-and-a11y.spec.ts",
+      "runner": "Playwright E2E",
+      "category": "E2E Responsive & Accesibilidad",
+      "tests": 3,
+      "casesCovered": ["TC-RESP-001..006", "TC-A11Y-001..005"],
+      "description": "Evalúa scrollWidth en 6 resoluciones (320x568 a 1920x1080), diagnostica nodos con overflow en 320px, valida landmarks semánticos, foco por teclado Tab y presencia de alt en imágenes."
+    },
+    {
+      "file": "__tests__/api/revalidate.test.ts",
+      "runner": "Vitest",
+      "category": "API & Revalidación ISR",
+      "tests": 24,
+      "casesCovered": ["TC-CMS-001..003", "TC-SEC-002"],
+      "description": "Prueba autenticación x-webhook-secret (401), validación de payload (400) e invalidación quirúrgica de tags y paths para 12 tipos de contenido, incluyendo redirección de oldSlug."
+    },
+    {
+      "file": "__tests__/api/reviews.test.ts",
+      "runner": "Vitest",
+      "category": "API & Seguridad Anti-Spam",
+      "tests": 13,
+      "casesCovered": ["TC-API-004..006", "TC-SEC-002", "TC-SEC-003"],
+      "description": "Valida campos obligatorios, honeypot silencioso, trampa temporal (<1.8s), rate limit por IP (429 Too Many Requests), sanitización XSS y envío SMTP vía Brevo."
+    },
+    {
+      "file": "__tests__/api/tour-media.test.ts",
+      "runner": "Vitest",
+      "category": "API Proxy 360° & CDN Edge",
+      "tests": 7,
+      "casesCovered": ["TC-API-007..008", "TC-PERF-003"],
+      "description": "Verifica validación de mediaId numérico, restricción de origen WordPress, cabeceras ETag / If-None-Match (304 Not Modified), CORS y manejo de errores 404/502."
+    },
+    {
+      "file": "__tests__/api/tour360-save.test.ts",
+      "runner": "Vitest",
+      "category": "API Admin & Persistencia 360°",
+      "tests": 6,
+      "casesCovered": ["TC-API-009", "TC-SEC-003"],
+      "description": "Comprueba autorización Bearer TOUR360_ADMIN_TOKEN (401), validación de esquema de escenas/hotspots (400) e invalidación revalidateTag/revalidatePath al guardar."
+    },
+    {
+      "file": "__tests__/lib/wordpress.test.ts",
+      "runner": "Vitest",
+      "category": "Resiliencia CMS & WordPress Core",
+      "tests": 18,
+      "casesCovered": ["TC-API-001..003", "TC-CMS-005"],
+      "description": "Valida cliente HTTP WordPress: construcción de URLs, timeouts, reintentos exponenciales ante 502/503, paginación segura y manejo de respuestas malformadas."
+    },
+    {
+      "file": "__tests__/lib/zero-cache-poisoning.test.ts",
+      "runner": "Vitest",
+      "category": "Resiliencia & Anti-Cache Poisoning",
+      "tests": 8,
+      "casesCovered": ["TC-CMS-002", "TC-PERF-004"],
+      "description": "Verifica ConcurrencyLimiter en memoria, recuperación ante fallos transitorios 502/429 y lanzamiento de WordPressAPIError ante 500 persistente para impedir cachear estados vacíos."
+    },
+    {
+      "file": "__tests__/lib/servicios.test.ts",
+      "runner": "Vitest",
+      "category": "Dominio & Normalización CMS",
+      "tests": 21,
+      "casesCovered": ["TC-HOM-002", "TC-API-001"],
+      "description": "Prueba normalización de servicios por sede, filtrado de servicios activos, resolución de iconos/imágenes ACF y ordenamiento."
+    },
+    {
+      "file": "__tests__/lib/build-tour-scenes.test.ts",
+      "runner": "Vitest",
+      "category": "Motor 360° & Hotspots",
+      "tests": 16,
+      "casesCovered": ["TC-360-001..004"],
+      "description": "Valida ensamblaje de escenas panorámicas 360° de habitaciones, vinculación de marcadores yaw/pitch, proxy de URLs multimedia y descarte de escenas sin imagen."
+    },
+    {
+      "file": "__tests__/lib/metadata.test.ts",
+      "runner": "Vitest",
+      "category": "SEO & Metadatos Dinámicos",
+      "tests": 14,
+      "casesCovered": ["TC-SEO-001", "TC-SEO-004"],
+      "description": "Comprueba limpieza de entidades HTML (stripHtml), truncado inteligente de descripciones, generación de canonicals y metadatos OpenGraph/Twitter."
+    },
+    {
+      "file": "__tests__/lib/sedes.test.ts",
+      "runner": "Vitest",
+      "category": "Dominio & Normalización CMS",
+      "tests": 11,
+      "casesCovered": ["TC-SED-001..004"],
+      "description": "Verifica mapeo de las 5 sedes (Santa Anita, Lince, San Isidro, Ate, Los Olivos), teléfonos, coordenadas, horarios y enlaces de WhatsApp."
+    },
+    {
+      "file": "__tests__/lib/habitaciones.test.ts",
+      "runner": "Vitest",
+      "category": "Dominio & Normalización CMS",
+      "tests": 9,
+      "casesCovered": ["TC-HAB-001..005"],
+      "description": "Prueba normalización de catálogo de habitaciones, relación con sedes, precios/tarifas, amenidades, galerías y bandera de disponibilidad 360°."
+    },
+    {
+      "file": "__tests__/lib/tour360-hotspots.test.ts",
+      "runner": "Vitest",
+      "category": "Motor 360° & Hotspots",
+      "tests": 9,
+      "casesCovered": ["TC-360-003"],
+      "description": "Valida configuración estática y dinámica de hotspots interactivos, transiciones entre escenas y prevención de referencias circulares rotas."
+    },
+    {
+      "file": "__tests__/components/contact-and-sedes.test.ts",
+      "runner": "Vitest",
+      "category": "Componentes & Integridad Comercial",
+      "tests": 7,
+      "casesCovered": ["TC-CON-001..002", "TC-SED-004"],
+      "description": "Verifica generación de enlaces profundos de WhatsApp con mensaje contextual por sede/habitación y formateo de protocolo tel:."
+    },
+    {
+      "file": "__tests__/components/asistente-chat.test.ts",
+      "runner": "Vitest",
+      "category": "Motor Conversacional IA",
+      "tests": 6,
+      "casesCovered": ["TC-CHAT-001..004"],
+      "description": "Prueba máquina de estados del Asistente Asturias, transiciones de quick replies, filtrado de recomendaciones y degradación sin datos."
+    },
+    {
+      "file": "__tests__/components/chat-engine-reviews.test.ts",
+      "runner": "Vitest",
+      "category": "Motor Conversacional IA",
+      "tests": 6,
+      "casesCovered": ["TC-CHAT-002", "TC-API-004"],
+      "description": "Valida flujo de captura de reseñas dentro del asistente, validación de estrellas/comentario y formato de envío hacia /api/reviews."
+    },
+    {
+      "file": "__tests__/lib/productos.test.ts",
+      "runner": "Vitest",
+      "category": "Dominio & Tienda Pasión y Placer",
+      "tests": 6,
+      "casesCovered": ["TC-HOM-002", "TC-API-002"],
+      "description": "Comprueba normalización de catálogo de productos temáticos, categorías, precios y manejo de colección vacía."
+    },
+    {
+      "file": "__tests__/seo/favicon.test.ts",
+      "runner": "Vitest",
+      "category": "SEO Técnico & Activos",
+      "tests": 6,
+      "casesCovered": ["TC-SEO-004"],
+      "description": "Verifica existencia física e integridad de favicon.ico, icon-192.png, icon-512.png, apple-touch-icon.png y manifest.webmanifest."
+    },
+    {
+      "file": "__tests__/lib/build-servicio-tour-scenes.test.ts",
+      "runner": "Vitest",
+      "category": "Motor 360° & Hotspots",
+      "tests": 5,
+      "casesCovered": ["TC-360-001", "TC-360-003"],
+      "description": "Prueba construcción de escenas 360° para áreas de servicios (cochera, jacuzzi, zonas comunes) y resolución de audio/hotspots."
+    },
+    {
+      "file": "__tests__/components/skeletons.test.ts",
+      "runner": "Vitest",
+      "category": "UI & Estados de Carga",
+      "tests": 5,
+      "casesCovered": ["TC-PERF-001", "TC-A11Y-005"],
+      "description": "Verifica consistencia estructural de los componentes Skeleton en rutas con streaming para minimizar CLS."
+    },
+    {
+      "file": "__tests__/lib/utils.test.ts",
+      "runner": "Vitest",
+      "category": "Utilidades Base",
+      "tests": 5,
+      "casesCovered": ["TC-HOM-001"],
+      "description": "Prueba helpers de combinación de clases, formateo de moneda/texto y normalización de slugs."
+    },
+    {
+      "file": "__tests__/seo/seo-and-security.test.ts",
+      "runner": "Vitest",
+      "category": "SEO Técnico & Escaneo de Secretos",
+      "tests": 5,
+      "casesCovered": ["TC-SEO-001..003", "TC-SEC-001"],
+      "description": "Valida reglas de robots.ts, exclusión de /api/ y /vista360 en sitemap.ts, generateMetadata y escaneo estático de 0 secretos de servidor en componentes 'use client'."
+    },
+    {
+      "file": "__tests__/components/habitaciones-filters.test.ts",
+      "runner": "Vitest",
+      "category": "Componentes & Filtros",
+      "tests": 4,
+      "casesCovered": ["TC-HAB-001", "TC-HAB-003"],
+      "description": "Comprueba lógica combinatoria de filtrado de habitaciones por sede, categoría temática, capacidad y disponibilidad 360°."
+    },
+    {
+      "file": "__tests__/seo/sitelinks.test.ts",
+      "runner": "Vitest",
+      "category": "SEO Técnico & Datos Estructurados",
+      "tests": 4,
+      "casesCovered": ["TC-SEO-001", "TC-SEO-003"],
+      "description": "Verifica generación de JSON-LD Schema.org (Hotel / LocalBusiness) y enlaces estructurados para las 5 sedes."
+    },
+    {
+      "file": "__tests__/components/site-mode-guard.test.ts",
+      "runner": "Vitest",
+      "category": "Componentes & Resiliencia UI",
+      "tests": 3,
+      "casesCovered": ["TC-HOM-005", "TC-API-003"],
+      "description": "Prueba guarda de modo mantenimiento y renderizado seguro ante interrupción parcial del CMS."
+    },
+    {
+      "file": "__tests__/lib/tarifas.test.ts",
+      "runner": "Vitest",
+      "category": "Dominio & Reglas de Negocio",
+      "tests": 2,
+      "casesCovered": ["TC-HAB-002", "TC-HAB-003"],
+      "description": "Valida cálculo y formateo de tarifas por horas/noche y suplementos según sede y tipo de habitación."
+    },
+    {
+      "file": "__tests__/components/sedes-compare.test.ts",
+      "runner": "Vitest",
+      "category": "Componentes & Comparador",
+      "tests": 1,
+      "casesCovered": ["TC-SED-001", "TC-SED-002"],
+      "description": "Verifica matriz comparativa de servicios y atributos entre las 5 sedes de Hotel Asturias."
+    }
+  ],
+  "riskMatrix": [
+    { "id": "R01", "risk": "Enlace de contacto WhatsApp o teléfono incorrecto", "impact": "Alto", "probability": "Media", "priority": "P0", "cases": ["TC-SMK-005", "TC-SED-004", "TC-HAB-004", "TC-CON-001", "TC-CON-002"] },
+    { "id": "R02", "risk": "Habitación asociada a una sede incorrecta", "impact": "Alto", "probability": "Media", "priority": "P0", "cases": ["TC-SED-001", "TC-SED-003", "TC-HAB-002", "TC-HAB-003"] },
+    { "id": "R03", "risk": "Error o caída en WordPress REST API (502/503/Timeout)", "impact": "Alto", "probability": "Media", "priority": "P0", "cases": ["TC-HAB-001", "TC-API-001", "TC-API-002", "TC-API-003"] },
+    { "id": "R04", "risk": "Contenido publicado en WordPress no se revalida en Next.js (ISR)", "impact": "Alto", "probability": "Media", "priority": "P1", "cases": ["TC-CMS-001", "TC-CMS-002", "TC-CMS-003", "TC-CMS-004"] },
+    { "id": "R05", "risk": "Visor Tour 360° WebGL no inicializa o falla al cargar panorámica", "impact": "Medio/Alto", "probability": "Media", "priority": "P1", "cases": ["TC-SMK-006", "TC-360-001", "TC-360-002", "TC-360-003", "TC-360-004", "TC-360-005"] },
+    { "id": "R06", "risk": "Desbordamiento horizontal o bloqueo de menú en viewports móviles", "impact": "Alto", "probability": "Media", "priority": "P1", "cases": ["TC-NAV-002", "TC-RESP-001", "TC-RESP-002", "TC-RESP-003", "TC-RESP-004"] },
+    { "id": "R07", "risk": "Asistente Virtual Asturias no abre, duplica modales o falla en quick replies", "impact": "Medio", "probability": "Media", "priority": "P1", "cases": ["TC-SMK-007", "TC-CHAT-001", "TC-CHAT-002", "TC-CHAT-003", "TC-CHAT-004", "TC-CHAT-005"] },
+    { "id": "R08", "risk": "Imágenes rotas o sin optimizar desde el servidor de medios CMS", "impact": "Medio", "probability": "Media", "priority": "P2", "cases": ["TC-HOM-005", "TC-HAB-005", "TC-A11Y-004"] },
+    { "id": "R09", "risk": "Barreras de accesibilidad por teclado (Tab/Escape) o falta de roles ARIA", "impact": "Medio", "probability": "Media", "priority": "P2", "cases": ["TC-A11Y-001", "TC-A11Y-002", "TC-A11Y-003", "TC-A11Y-004", "TC-A11Y-005"] },
+    { "id": "R10", "risk": "Regresión visual en resoluciones Desktop / Full HD", "impact": "Medio", "probability": "Baja", "priority": "P2", "cases": ["TC-HOM-001", "TC-RESP-005", "TC-RESP-006"] },
+    { "id": "R11", "risk": "Metadatos SEO incorrectos, rutas privadas en sitemap o Soft-404", "impact": "Medio", "probability": "Media", "priority": "P2", "cases": ["TC-HAB-006", "TC-SEO-001", "TC-SEO-002", "TC-SEO-003", "TC-SEO-004"] },
+    { "id": "R12", "risk": "Degradación de rendimiento por descarga prematura de panorámicas 360°", "impact": "Medio/Alto", "probability": "Media", "priority": "P1", "cases": ["TC-PERF-001", "TC-PERF-002", "TC-PERF-003", "TC-PERF-004"] },
+    { "id": "R13", "risk": "Exposición de secretos en bundle cliente, spam o XSS en reseñas", "impact": "Alto", "probability": "Baja", "priority": "P1", "cases": ["TC-SEC-001", "TC-SEC-002", "TC-SEC-003", "TC-API-004", "TC-API-005", "TC-API-006"] }
+  ],
+  "keyFindingsAndSolutions": [
+    {
+      "id": "DEF-001",
+      "type": "Producto / SEO Técnico",
+      "severity": "Menor",
+      "title": "Detección de Soft-404 por Streaming en Next.js App Router",
+      "detail": "Al solicitar un slug de habitación inexistente (/habitaciones/slug-inexistente-qa-404), la presencia de loading.tsx provoca que Next.js envíe cabeceras HTTP 200 en el shell inicial antes de resolver notFound(), aunque renderiza correctamente la UI 404 e inyecta <meta name='robots' content='noindex, follow'>.",
+      "caseIds": [
+        "TC-HAB-006",
+        "TC-SEO-002"
+      ]
+    },
+    {
+      "id": "DEF-002",
+      "type": "Producto / UI Responsive",
+      "severity": "Menor",
+      "title": "Desbordamiento horizontal de 49px en viewport extremo 320x568",
+      "detail": "La prueba automatizada de scrollWidth detectó que en /habitaciones bajo 320x568 el encabezado h2 en mayúsculas ('NUESTRAS HABITACIONES') con text-3xl y tracking-[0.15em] alcanzaba 369px (321px de texto + 48px de padding px-6), mientras que de 375px a 1920px el overflow era 0px.",
+      "solution": "Ajustar en móvil el encabezado a text-2xl tracking-[0.08em] sm:text-4xl sm:tracking-[0.15em] en HabitacionesSection.tsx.",
+      "caseIds": [
+        "TC-RESP-001",
+        "TC-A11Y-005"
+      ]
+    },
+    {
+      "id": "DEF-TEST-001",
+      "type": "Suite de Pruebas",
+      "severity": "Corregido",
+      "title": "Actualización de mock de next/cache en guardado de Tour 360°",
+      "detail": "El endpoint /api/tour360/save incorporó revalidateTag además de revalidatePath para invalidación granular en caché; se actualizó el mock unitario en __tests__/api/tour360-save.test.ts y se amplió la suite a 6 particiones.",
+      "caseIds": [
+        "TC-API-009",
+        "TC-SEC-003"
+      ]
+    },
+    {
+      "id": "INFRA-001",
+      "type": "Infraestructura / CMS",
+      "severity": "Mitigado",
+      "title": "Control de concurrencia E2E contra el servidor de origen WordPress",
+      "detail": "Se identificó que ejecutar 4 workers de navegador simultáneos disparaba ~80 peticiones de optimización /_next/image hacia el origen WordPress, provocando ETIMEDOUT. Se configuró ejecución secuencial (--workers=1), reduciendo el tiempo de carga por página de ~40s a 1.3s-5.1s.",
+      "caseIds": [
+        "TC-PERF-004",
+        "TC-CMS-005"
+      ]
+    }
+  ],
+  "modulesSummary": [
+    {
+      "module": "Smoke & Flujos Críticos",
+      "cases": 7,
+      "approved": 7,
+      "partial": 0
+    },
+    {
+      "module": "Home & Degradación CMS",
+      "cases": 5,
+      "approved": 5,
+      "partial": 0
+    },
+    {
+      "module": "Navegación Desktop/Móvil & Historial",
+      "cases": 3,
+      "approved": 3,
+      "partial": 0
+    },
+    {
+      "module": "Sedes & Relación Habitaciones",
+      "cases": 4,
+      "approved": 4,
+      "partial": 0
+    },
+    {
+      "module": "Catálogo de Habitaciones & Filtros",
+      "cases": 7,
+      "approved": 6,
+      "partial": 1
+    },
+    {
+      "module": "Contacto (WhatsApp & Teléfono)",
+      "cases": 3,
+      "approved": 2,
+      "partial": 1
+    },
+    {
+      "module": "Visor Tour 360° WebGL",
+      "cases": 5,
+      "approved": 5,
+      "partial": 0
+    },
+    {
+      "module": "Asistente Virtual Asturias",
+      "cases": 5,
+      "approved": 4,
+      "partial": 1
+    },
+    {
+      "module": "CMS WordPress & Revalidación ISR",
+      "cases": 5,
+      "approved": 5,
+      "partial": 0
+    },
+    {
+      "module": "APIs (/reviews, /tour, /tour360/save)",
+      "cases": 9,
+      "approved": 9,
+      "partial": 0
+    },
+    {
+      "module": "Responsive Multi-Viewport (320px-1920px)",
+      "cases": 6,
+      "approved": 5,
+      "partial": 1
+    },
+    {
+      "module": "Accesibilidad (WCAG 2.2 AA)",
+      "cases": 5,
+      "approved": 0,
+      "partial": 5
+    },
+    {
+      "module": "Rendimiento & Caché CDN",
+      "cases": 4,
+      "approved": 3,
+      "partial": 1
+    },
+    {
+      "module": "SEO Técnico (Metadatos, Sitemap, Robots)",
+      "cases": 4,
+      "approved": 4,
+      "partial": 0
+    },
+    {
+      "module": "Seguridad (Secretos, XSS, Rate Limit)",
+      "cases": 6,
+      "approved": 6,
+      "partial": 0
+    }
+  ]
+}

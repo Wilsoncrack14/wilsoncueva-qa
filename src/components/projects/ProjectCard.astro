@@ -1,0 +1,116 @@
+---
+import type { PortfolioProject } from '../../types/portfolio';
+import TechLogo from '../ui/TechLogo';
+
+interface Props {
+  project: PortfolioProject;
+}
+
+const { project } = Astro.props;
+
+const thumbMap: Record<string, string> = {
+  'hotel-asturias': '/images/projects/thumb-hotel-asturias.png',
+  'shoot-studio': '/images/projects/thumb-shoot-studio.png',
+  'supabase-auth': '/images/projects/thumb-supabase-auth.png',
+};
+
+const shortDescMap: Record<string, string> = {
+  'hotel-asturias':
+    'QA Automation, pruebas E2E, API testing y validación de contenido en WordPress Headless.',
+  'shoot-studio':
+    'Web Testing, validación de multimedia, navegación y consumo de APIs REST.',
+  'supabase-auth':
+    'Testing de autenticación, registro, validación de formularios, sesiones y casos negativos.',
+};
+
+const isPrimary = project.slug === 'hotel-asturias';
+const thumbSrc = thumbMap[project.slug] || '/images/projects/thumb-hotel-asturias.png';
+const cardDescription = shortDescMap[project.slug] || project.description;
+---
+
+<article
+  class={`group relative flex flex-col sm:flex-row overflow-hidden rounded-2xl bg-bg-secondary transition duration-200 hover:-translate-y-0.5 ${
+    isPrimary
+      ? 'border border-accent-lime/35 hover:border-accent-lime/60'
+      : 'border border-white/[0.07] hover:border-white/[0.16]'
+  }`}
+>
+  <!-- Left Thumbnail (~42% width on desktop/tablet) -->
+  <div class="relative w-full sm:w-[42%] shrink-0 overflow-hidden bg-bg-primary border-b sm:border-b-0 sm:border-r border-white/[0.06]">
+    <img
+      src={thumbSrc}
+      alt={`Vista previa de ${project.shortTitle}`}
+      width="220"
+      height="212"
+      loading="lazy"
+      class="h-44 w-full object-cover sm:h-full opacity-90 transition duration-300 group-hover:scale-[1.02] group-hover:opacity-100"
+    />
+  </div>
+
+  <!-- Right Content (~58% width) -->
+  <div class="flex flex-1 flex-col justify-between p-5">
+    <div class="space-y-2.5">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <h3 class="text-base font-semibold text-text-primary group-hover:text-accent-lime transition-colors sm:text-lg">
+          <a href={`/projects/${project.slug}`} class="focus:outline-none">
+            <span class="sr-only">{project.name} — </span>
+            {project.shortTitle === 'Supabase Authentication' ? 'Supabase Auth' : project.shortTitle}
+          </a>
+        </h3>
+
+        {isPrimary && (
+          <span class="inline-flex items-center gap-1.5 rounded-full border border-accent-lime/30 bg-accent-lime/10 px-2.5 py-0.5 text-[10px] font-medium text-accent-lime">
+            <span class="h-1.5 w-1.5 rounded-full bg-accent-lime" aria-hidden="true"></span>
+            Proyecto principal
+          </span>
+        )}
+      </div>
+
+      <p class="text-xs leading-relaxed text-text-secondary">
+        {cardDescription}
+      </p>
+    </div>
+
+    <!-- Bottom Real Tech Logos + Subtle Arrow CTA -->
+    <div class="mt-5 flex items-center justify-between gap-2 pt-2 border-t border-white/[0.05]">
+      <div class="flex items-center gap-2.5">
+        {project.slug !== 'supabase-auth' ? (
+          <>
+            <span title="Next.js" class="inline-flex items-center justify-center opacity-85 hover:opacity-100">
+              <TechLogo id="nextjs" className="h-4 w-4" />
+            </span>
+            <span title="React" class="inline-flex items-center justify-center opacity-85 hover:opacity-100">
+              <TechLogo id="react" className="h-4 w-4" />
+            </span>
+            <span title="TypeScript" class="inline-flex items-center justify-center opacity-85 hover:opacity-100">
+              <TechLogo id="typescript" className="h-4 w-4" />
+            </span>
+            <span title="WordPress Headless" class="inline-flex items-center justify-center opacity-85 hover:opacity-100">
+              <TechLogo id="wordpress" className="h-4 w-4" />
+            </span>
+          </>
+        ) : (
+          <>
+            <span title="React" class="inline-flex items-center justify-center opacity-85 hover:opacity-100">
+              <TechLogo id="react" className="h-4 w-4" />
+            </span>
+            <span title="TypeScript" class="inline-flex items-center justify-center opacity-85 hover:opacity-100">
+              <TechLogo id="typescript" className="h-4 w-4" />
+            </span>
+            <span title="Supabase" class="inline-flex items-center justify-center opacity-85 hover:opacity-100">
+              <TechLogo id="supabase" className="h-4 w-4" />
+            </span>
+          </>
+        )}
+      </div>
+
+      <a
+        href={`/projects/${project.slug}`}
+        aria-label={`Ver proyecto ${project.name}`}
+        class="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-white/[0.09] bg-surface text-xs text-text-secondary transition group-hover:border-accent-lime/40 group-hover:text-accent-lime focus:outline-none"
+      >
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</article>

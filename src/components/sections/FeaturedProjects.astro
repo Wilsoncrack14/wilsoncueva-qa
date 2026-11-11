@@ -1,0 +1,31 @@
+---
+import Container from '../layout/Container.astro';
+import ProjectCard from '../projects/ProjectCard.astro';
+import { portfolioProjects } from '../../data/projects';
+---
+
+<section id="proyectos" class="bg-bg-primary py-10 sm:py-14">
+  <Container>
+    <div class="flex items-center justify-between gap-4 mb-6">
+      <div class="flex items-center gap-2.5">
+        <span class="h-4 w-0.5 rounded-full bg-accent-lime/80" aria-hidden="true"></span>
+        <h2 class="text-base font-semibold tracking-tight text-text-primary sm:text-lg">
+          Proyectos destacados
+        </h2>
+      </div>
+      <a
+        href="/projects"
+        class="inline-flex items-center gap-1.5 text-xs font-medium text-text-secondary hover:text-text-primary transition-colors"
+      >
+        <span>Ver todos los proyectos</span>
+        <span class="text-accent-lime" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+      {portfolioProjects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </Container>
+</section>

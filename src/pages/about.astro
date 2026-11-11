@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/layout/Container.astro';
+import { profileData } from '../data/profile';
+---
+
+<BaseLayout
+  title="Sobre mí | Wilson Cueva — QA Automation Engineer / Software QA"
+  description={profileData.academicProfile}
+>
+  <!-- HERO ABOUT -->
+  <section class="border-b border-border-subtle bg-bg-primary bg-tech-grid py-14 sm:py-20">
+    <Container>
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
+        <div class="space-y-5 lg:col-span-8">
+          <span class="inline-flex items-center gap-2 rounded-full border border-accent-lime/40 bg-accent-lime/10 px-3.5 py-1 font-mono text-xs font-semibold text-accent-lime">
+            PERFIL PROFESIONAL & ACADÉMICO
+          </span>
+          <h1 class="text-3xl font-extrabold tracking-tight text-text-primary sm:text-5xl">
+            {profileData.name}
+          </h1>
+          <p class="font-mono text-base font-semibold text-accent-lime sm:text-lg">
+            {profileData.role} · {profileData.location}
+          </p>
+          <p class="text-base leading-relaxed text-text-primary sm:text-lg">
+            {profileData.academicProfile}
+          </p>
+          <p class="text-sm leading-relaxed text-text-secondary sm:text-base">
+            {profileData.heroDescription}
+          </p>
+
+          <div class="flex flex-wrap gap-3 pt-2">
+            <a
+              href={profileData.cvUrl}
+              download="Wilson_Cueva_CV_QA_Automation.pdf"
+              class="inline-flex items-center gap-2 rounded-lg bg-accent-lime px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-bg-primary transition hover:bg-accent-lime-dim"
+            >
+              Descargar CV ↓
+            </a>
+            <a
+              href="/contact"
+              class="inline-flex items-center gap-2 rounded-lg border border-border-subtle bg-surface px-5 py-2.5 text-xs font-semibold text-text-primary transition hover:border-accent-lime/50 hover:text-accent-lime"
+            >
+              Ir a Contacto →
+            </a>
+          </div>
+        </div>
+
+        <!-- Identity Summary Card -->
+        <div class="lg:col-span-4">
+          <div class="rounded-2xl border border-border-subtle bg-surface p-6 space-y-4">
+            <div class="flex items-center gap-3 border-b border-border-subtle pb-4">
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-accent-lime/50 bg-bg-secondary font-mono text-lg font-bold text-accent-lime">
+                {profileData.initials}
+              </div>
+              <div>
+                <h2 class="font-bold text-text-primary">{profileData.name}</h2>
+                <p class="font-mono text-xs text-text-secondary">Certus · Lima, Perú</p>
+              </div>
+            </div>
+            <dl class="space-y-3 text-xs">
+              <div>
+                <dt class="font-mono uppercase text-text-secondary">Especialidad</dt>
+                <dd class="mt-0.5 font-medium text-text-primary">{profileData.specialization}</dd>
+              </div>
+              <div>
+                <dt class="font-mono uppercase text-text-secondary">Institución Académica</dt>
+                <dd class="mt-0.5 font-medium text-text-primary">Instituto Certus</dd>
+              </div>
+              <div>
+                <dt class="font-mono uppercase text-text-secondary">Carrera</dt>
+                <dd class="mt-0.5 font-medium text-accent-lime">
+                  Administración de Sistemas para la Transformación Digital
+                </dd>
+              </div>
+              <div>
+                <dt class="font-mono uppercase text-text-secondary">Transparencia Profesional</dt>
+                <dd class="mt-0.5 text-text-secondary">
+                  Perfil fundamentado en formación académica documentada y proyectos técnicos verificables de desarrollo y QA Automation.
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <Container class="py-14 sm:py-20 space-y-16">
+    <!-- 1. FORMACIÓN -->
+    <section class="space-y-6">
+      <div class="space-y-1">
+        <p class="font-mono text-xs font-semibold uppercase tracking-widest text-accent-lime">
+          01 // Educación
+        </p>
+        <h2 class="text-2xl font-bold text-text-primary sm:text-3xl">Formación Académica</h2>
+      </div>
+
+      {profileData.education.map((edu) => (
+        <div class="rounded-2xl border border-border-subtle bg-surface p-6 sm:p-8 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-xl font-bold text-text-primary">{edu.program}</h3>
+              <p class="font-mono text-sm text-accent-lime">{edu.institution}</p>
+            </div>
+            <span class="rounded-full border border-accent-lime/40 bg-accent-lime/10 px-3 py-1 font-mono text-xs text-accent-lime">
+              {edu.status}
+            </span>
+          </div>
+          <p class="text-sm leading-relaxed text-text-secondary">{edu.summary}</p>
+          <div class="grid gap-3 sm:grid-cols-2 pt-2">
+            {edu.focusAreas.map((area) => (
+              <div class="rounded-lg border border-border-subtle bg-bg-secondary p-3.5 text-xs text-text-primary flex items-start gap-2.5">
+                <span class="font-mono text-accent-lime font-bold">✓</span>
+                <span>{area}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <!-- 2. CONOCIMIENTOS -->
+    <section class="space-y-6">
+      <div class="space-y-1">
+        <p class="font-mono text-xs font-semibold uppercase tracking-widest text-accent-lime">
+          02 // Dominio Técnico
+        </p>
+        <h2 class="text-2xl font-bold text-text-primary sm:text-3xl">Conocimientos Especializados</h2>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {profileData.knowledgePillars.map((pillar) => (
+          <div class="rounded-xl border border-border-subtle bg-surface p-6 space-y-3">
+            <h3 class="text-lg font-bold text-accent-lime">{pillar.title}</h3>
+            <ul class="space-y-2 text-xs sm:text-sm text-text-secondary list-disc pl-4">
+              {pillar.items.map((item) => (
+                <li class="leading-relaxed">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 3. EXPERIENCIA PRÁCTICA (PROYECTOS REALES Y CASOS DE ESTUDIO) -->
+    <section class="space-y-6">
+      <div class="space-y-1">
+        <p class="font-mono text-xs font-semibold uppercase tracking-widest text-accent-lime">
+          03 // Práctica Verificable
+        </p>
+        <h2 class="text-2xl font-bold text-text-primary sm:text-3xl">
+          Experiencia Práctica en Proyectos de Testing y Desarrollo
+        </h2>
+        <p class="text-sm text-text-secondary">
+          Experiencia adquirida mediante el desarrollo y aseguramiento de calidad de proyectos técnicos documentados.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {profileData.practicalExperience.map((exp) => (
+          <article class="rounded-xl border border-border-subtle bg-surface p-6 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 class="text-lg font-bold text-text-primary">{exp.project}</h3>
+                <p class="font-mono text-xs text-accent-lime">{exp.role}</p>
+              </div>
+              <span class="rounded border border-border-subtle bg-bg-secondary px-2.5 py-1 font-mono text-xs text-text-secondary">
+                {exp.period}
+              </span>
+            </div>
+            <p class="text-sm text-text-secondary leading-relaxed">{exp.description}</p>
+            <ul class="space-y-1.5 text-xs text-text-secondary list-disc pl-5">
+              {exp.achievements.map((ach) => (
+                <li class="leading-relaxed">{ach}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- 4. OBJETIVOS PROFESIONALES -->
+    <section class="space-y-6">
+      <div class="space-y-1">
+        <p class="font-mono text-xs font-semibold uppercase tracking-widest text-accent-lime">
+          04 // Proyección
+        </p>
+        <h2 class="text-2xl font-bold text-text-primary sm:text-3xl">Objetivos Profesionales</h2>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        {profileData.careerObjectives.map((goal, idx) => (
+          <div class="rounded-xl border border-border-subtle bg-surface p-6 space-y-3">
+            <span class="font-mono text-xs font-bold text-accent-lime">
+              OBJETIVO 0{idx + 1}
+            </span>
+            <p class="text-sm leading-relaxed text-text-secondary">{goal}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </Container>
+</BaseLayout>

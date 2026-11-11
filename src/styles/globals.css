@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    background-color: #080B0A;
+    color: #F5F7F5;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  html,
+  body {
+    position: relative;
+    background-color: #090B0A;
+    color: #F3F5F4;
+    overflow-x: clip;
+    max-width: 100%;
+  }
+}
+
+/* Custom subtle grid background for editorial Dark Tech aesthetic */
+.bg-tech-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(41, 51, 45, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(41, 51, 45, 0.22) 1px, transparent 1px);
+}
+
+/* Infinite seamless marquee animation for the Tech Stack */
+@keyframes tech-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-tech-marquee {
+  display: flex;
+  width: max-content;
+  animation: tech-marquee 28s linear infinite;
+}
+
+.animate-tech-marquee:hover {
+  animation-play-state: paused;
+}
+
+.marquee-fade-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
+}

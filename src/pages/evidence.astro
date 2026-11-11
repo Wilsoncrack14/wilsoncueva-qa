@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/layout/Container.astro';
+import EvidenceTabs from '../components/evidence/EvidenceTabs';
+---
+
+<BaseLayout
+  title="Evidencias técnicas — Automatización y resultados | Wilson Cueva"
+  description="Evidencias reales de mi trabajo en testing: código, reportes, APIs, rendimiento y CI/CD."
+>
+  <section class="bg-bg-primary py-10 sm:py-14">
+    <Container class="space-y-7">
+      <div class="space-y-1.5 max-w-2xl">
+        <p class="font-mono text-xs font-medium uppercase tracking-wider text-accent-lime">
+          Evidencias técnicas
+        </p>
+        <h1 class="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
+          Automatización y <span class="text-accent-lime">resultados</span>
+        </h1>
+        <p class="text-sm text-text-secondary">
+          Evidencias reales de mi trabajo en testing: código, reportes, APIs, rendimiento y CI/CD.
+        </p>
+      </div>
+
+      <EvidenceTabs client:load />
+    </Container>
+  </section>
+</BaseLayout>

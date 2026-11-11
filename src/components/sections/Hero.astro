@@ -69,9 +69,25 @@ import { profileData } from '../../data/profile';
 
           <span class="text-white/[0.12]" aria-hidden="true">·</span>
 
-          <span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-text-secondary">
-            <span>Web · API · Performance</span>
-          </span>
+          <a
+            href={profileData.linkedinUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-1 font-mono text-[11px] text-accent-lime hover:underline"
+          >
+            <span>LinkedIn ↗</span>
+          </a>
+
+          <span class="text-white/[0.12]" aria-hidden="true">·</span>
+
+          <a
+            href={profileData.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex items-center gap-1 font-mono text-[11px] text-text-secondary hover:text-accent-lime transition-colors"
+          >
+            <span>GitHub ↗</span>
+          </a>
         </div>
       </div>
 

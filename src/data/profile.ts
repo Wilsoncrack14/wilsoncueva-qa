@@ -8,7 +8,7 @@ export const profileData = {
     'Construyo automatizaciones de pruebas confiables para garantizar la calidad del software, con enfoque en Web Testing, API Testing, pruebas E2E y rendimiento.',
   academicProfile:
     'Egresado de Administración de Sistemas para la Transformación Digital en Certus, con formación en desarrollo web, testing de software, automatización y tecnologías cloud.',
-  email: 'wilsoncueva714@gmail.com',
+  email: 'cueva.vilchez.wilson@gmail.com',
   githubUrl: 'https://github.com/Wilsoncrack14',
   linkedinUrl: 'https://www.linkedin.com/in/wilson-cueva/',
   cvUrl: '/CV_Wilson_Cueva_QA_Automation.pdf',
